@@ -2,15 +2,22 @@ import React from 'react';
 import { useSnapshot } from 'valtio';
 import state from '../store';
 import {easing} from 'maath'; 
+import { Mesh } from 'three';
 import {Decal, useGLTF, useTexture} from '@react-three/drei'
+import { useFrame } from '@react-three/fiber';
 
 const Shirt = () => {
     const snap = useSnapshot(state)
     const {nodes, materials} = useGLTF('/shirt_baked.glb');
+    
     const logoTexture = useTexture(snap.logoDecal)
     const fullTexture = useTexture(snap.fullDecal)
+    
+    useFrame((state,delta)=> easing.dampC(materials.lambert1.color, snap.color, 0.25, delta));
+    const stateString = JSON.stringify(snap)
+    
     return (
-    <group>
+    <group key={stateString}>
         <mesh
             castShadow
             geometry={nodes.T_Shirt_male.geometry}
@@ -32,6 +39,9 @@ const Shirt = () => {
                 rotation={[0,0,0]}
                 scale={0.15}
                 map={logoTexture}
+                // map-anisotropy={16}
+                depthTest={false}
+                depthWrite={true}
             />
             )}
         </mesh>

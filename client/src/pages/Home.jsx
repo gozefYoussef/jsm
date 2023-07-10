@@ -22,8 +22,8 @@ const Home = () => {
                         alt='logo'   
                         className='w-8 h-8 object-contain'/>
                 </motion.header>
-                <motion.div {...headTextAnimation}>
-                    <motion.div>
+                <motion.div {...headContainerAnimation}>
+                    <motion.div {...headTextAnimation}>
                         <h1 className='head-text'>
                             Let's <br className='xl:block hidden'/> Do It.
                         </h1>
